@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ recipe['title'] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>{{ recipe['title'] }}</h1>
+    <h1>{{recipe['id']}}</h1>
+    <img src="{{ recipe['image'] }}" alt="{{ recipe['title'] }}" style="width: 300px;">
+
+    <h2>Ingredients</h2>
+    <ul>
+        {% for ingredient in recipe['extendedIngredients'] %}
+            <li>{{ ingredient['original'] }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Instructions</h2>
+    <ol>
+        {% for step in recipe['analyzedInstructions'][0]['steps'] %}
+            <li>{{ step['step'] }}</li>
+        {% endfor %}
+    </ol>
+
+    <h2>Nutritional Info</h2>
+    {% if recipe.get('nutrition') and recipe['nutrition'].get('nutrients') %}
+        <p>Calories: {{ recipe['nutrition']['nutrients'][0]['amount'] }} kcal</p>
+    {% else %}
+        <p>Nutritional information is not available.</p>
+    {% endif %}
+
+    <a href="/">Back to Search</a>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Recipe Finder</h1>
+    <form action="/search" method="get">
+        <input type="text" name="ingredient" placeholder="Enter ingredient" value="{{ ingredient }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if recipes %}
+        <h2>Recipes Found:</h2>
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <a href="/recipe/{{ recipe['id'] }}">{{ recipe['title'] }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        {% if ingredient %}
+            <p>No recipes found for "{{ ingredient }}"</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
